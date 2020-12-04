@@ -1,8 +1,7 @@
-# tojup
-Utility to convert scripts to Jupyter Notebook (ipynb) format
+# tojup: Utility to convert scripts into Jupyter Notebook (ipynb) format
 
-
-usage: tojup.py [-h] -f FILE [-l LANGUAGE] [-s SEP]
+```
+usage: `tojup.py [-h] -f FILE [-l LANGUAGE] [-s SEP]`
 
 This program will convert a script into a jupyter notebook. If the line starts with a "#", then that line will be
 considered to be a markdown cell. Specify language as bash, if you like the cell to start with "%%bash". Specify code
@@ -16,12 +15,13 @@ optional arguments:
                         *bash*, a prefix %bash will be added to the cell block.
   -s SEP, --sep SEP     chunk seperator [Default: ]. " ": each line will be converted into a individual cell block]
 
-
+```
 
 
 
 Example
+```
 usage: tojup.py -f tojup.py --sep '##%%' > tojup.ipynb
-
+```
 Will convert the file *tojupy.py* in which each code block has been demarcated by "##%%" into ipynb format.
 
