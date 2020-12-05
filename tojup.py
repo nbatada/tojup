@@ -11,7 +11,8 @@ This program will convert a script file into a jupyter notebook.
 
 Usage: ./convert_script_to_jupyter.py -f myprog.sh -l bash > myprog.ipynb
 
-https://nbformat.readthedocs.io/en/latest/#:~:text=Jupyter%20(n%C3%A9%20IPython)%20notebook%20files,is%20stored%20in%20a%20cell.
+https://ipython.org/ipython-doc/dev/notebook/nbformat.html
+
 '''
 
 ##%%
@@ -74,8 +75,7 @@ def formatOneCell(cell_txt, count, language="python", cell_type="code"):
         out.append('"cell_type": "%s",' % "markdown")
     else:
         out.append('"cell_type": "%s",' % "code")
-        if language.lower()=="bash":
-            cell_txt="%%%%bash\\n%s" % cell_txt
+        #if language.lower()=="bash":  cell_txt="%%%%bash\\n%s" % cell_txt
         out.append('"execution_count": %s,' % count)
         out.append('"outputs": [],')
 
@@ -107,11 +107,33 @@ def convertToJupyterFormat(L, language):
     
     out.append(' "metadata": {')
     out.append('   \t"kernelspec": {')
-    out.append('   \t"display_name": "%s",' % "python") #language)
-    out.append('   \t"language": "%s",' % "python") #language)
-    out.append('   \t"name": "%s"' % "python") #language)
+    out.append('   \t"display_name": "%s",' % language)
+    out.append('   \t"language": "%s",' % language)
+    out.append('   \t"name": "%s"' % language)
+    out.append('  },')
+    
+    codemirror_mode="python"
+    file_extension=".py"
+    mimetype="text/x-python"
+
+    if language=='bash':
+        codemirror_mode="shell"
+        file_extension=".sh"
+        mimetype="text/x-sh"
+    elif language=='r':
+        codemirror_mode="r"
+        file_extension=".r"
+        mimetype="text/x-r-source"
+    # else default to python
+
+    out.append(' "language_info": {')
+    out.append('   \t"codemirror_mode": "%s",' % codemirror_mode)
+    out.append('   \t"file_extension": "%s",' % file_extension)
+    out.append('   \t"mimetype": "%s",' % mimetype)
+    out.append('   \t"name": "%s"' % language)
     out.append('   \t}')
     out.append('  },')
+
     out.append(' "nbformat": 4,')
     out.append(' "nbformat_minor": 2')
     out.append('}')
@@ -132,7 +154,7 @@ Specify code blocks via *sep* argument.
     ''')
     parser.add_argument('-f','--file',default='-',action='store',required=True,help='File name to read from. You can specify "-" to pipe the script file.')
     parser.add_argument('-l','--language',default='python',action='store',required=False,help='programming language of the input script. [Default: python] options:{python, bash}. If you specify *bash*, a prefix %%bash will be added to the cell block.')
-    parser.add_argument('-s','--sep',default='\n', action='store',required=False,help='chunk seperator [Default: \n]. "\n": each line will be converted into a individual cell block]')
+    parser.add_argument('-s','--sep',default='##%%', action='store',required=False,help='chunk seperator [Default: "##%%"]')
     args=parser.parse_args()
     if args.file=='-':
         fp=sys.stdin
