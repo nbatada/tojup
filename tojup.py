@@ -126,7 +126,7 @@ def convertToJupyterFormat(L, language):
         mimetype="text/x-r-source"
     # else default to python
 
-    out.append(' "language_info": {')
+    out.append(' "language_info": {') # Note: part of metadata dictionary
     out.append('   \t"codemirror_mode": "%s",' % codemirror_mode)
     out.append('   \t"file_extension": "%s",' % file_extension)
     out.append('   \t"mimetype": "%s",' % mimetype)
