@@ -25,3 +25,6 @@ usage: tojup.py -f tojup.py --sep '##%%' > tojup.ipynb
 ```
 Will convert the file *tojupy.py* in which each code block has been demarcated by "##%%" into ipynb format.
 
+![Before](images/tojup_before.png)
+
+![After](images/tojup_after.png)
