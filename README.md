@@ -1,4 +1,4 @@
-# tojup: Utility to convert scripts into Jupyter Notebook (ipynb) format
+# tojup: Convert scripts into Jupyter Notebook (ipynb) format
 
 ```
 usage: `tojup.py [-h] -f FILE [-l LANGUAGE] [-s SEP]`
